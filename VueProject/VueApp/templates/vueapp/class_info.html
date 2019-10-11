@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/vueapp/jquery-2.0.0.min.js"></script>
+    <script src="/static/vueapp/vue.min.js"></script>
+    <script src="/static/vueapp/vue-resource.js"></script>
+</head>
+<body>
+    {% verbatim %}
+    <ul id="class_info">
+        <li v-for="c in class_data">{{ c.class_name }}--{{ c.class_number }}</li>
+    </ul>
+    {% endverbatim %}
+    <script>
+        Vue.use(VueResource); //声明vue对象
+        var vue = new Vue(
+            {
+                el: "#class_info", //指定vue数据绑定的范围
+                data:{
+                    class_data:[]
+                }, //绑定数据点，上面需要啥数据，就是通过这里调用
+                created: function () {
+                    var url = "/class_info/";
+                    this.$http.get(url).then( //类似ajax的get请求
+                        function (data) {
+                            console.log(data)
+                            this.class_data = data["data"]["D"];
+                            console.log("++++++++++++++++++++++++++++");
+                            console.log(data["data"]["D"]);
+                            console.log("++++++++++++++++++++++++++++");
+                        },
+                        function (error) {
+                            console.log(error)
+                        }
+                    )
+                }//初始化执行
+            }
+        )
+    </script>
+</body>
+</html>

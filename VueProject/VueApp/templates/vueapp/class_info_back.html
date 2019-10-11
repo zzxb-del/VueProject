@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/vueapp/jquery-2.0.0.min.js"></script>
+    <script src="/static/vueapp/vue.min.js"></script>
+    <script src="/static/vueapp/vue-resource.js"></script>
+</head>
+<body>
+    <ul id="class_info">
+
+    </ul>
+    <script>
+        $.ajax(
+            {
+                url: "/class_info/",
+                type: "get",
+                data: "",
+                success: function (data) {
+                    var line = data["data"];
+                    for(var i in line){
+                        var class_name = line[i]["class_name"]
+                        console.log(class_name)
+                        var html = "<li>"+class_name+"</li>"
+                        $("#class_info").append(html)
+                    }
+                },
+                error: function (error) {
+
+                }
+            }
+        )
+    </script>
+</body>
+</html>
